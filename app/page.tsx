@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -42,6 +46,7 @@ export default function Home() {
           availableCopies : '',
           issuesCount : '',
         });
+        router.push('/allbooks');
       }else{
         alert("Failed to add book");
       }
@@ -53,7 +58,8 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-yellow-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-yellow-50 flex items-center justify-center p-4">
+      
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-amber-900 mb-6">Add New Book</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
