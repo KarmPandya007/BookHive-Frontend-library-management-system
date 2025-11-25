@@ -12,19 +12,45 @@ export default function Home() {
     isbn: '',
     totalCopies: '',
     availableCopies: '',
-    issuesCount: ''
+    issuesCount: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+    setFormData(prev => ({...prev, [name]: value}));
+  }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: any)=>{
     e.preventDefault();
-    console.log(formData);
-    // Here you can add logic to submit the data to your backend
-  };
+    try{
+      const response = await fetch('http://localhost:7000/api/books', {
+        method : "POST",
+        headers : {
+          'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(formData)
+      })
+      if(response.ok){
+        alert("Book added successfully");
+        setFormData({
+          title : '',
+          author : '',
+          description : '',
+          category : '',
+          isbn : '',
+          totalCopies : '',
+          availableCopies : '',
+          issuesCount : '',
+        });
+      }else{
+        alert("Failed to add book");
+      }
+      
+    }catch(error){
+      console.log("Error:", error);
+      alert("An error occurred while adding the book");
+    }
+  }
 
   return (
     <div className="min-h-screen bg-yellow-50 flex items-center justify-center p-4">
