@@ -1,9 +1,7 @@
 "use client"
 
-import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "./components/Navbar";
 
 export default function Home() {
   const router = useRouter();
