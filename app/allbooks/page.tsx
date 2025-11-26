@@ -14,12 +14,12 @@ export default function AllBooks() {
 
   return (
     <div className="min-h-screen bg-yellow-50 p-8">
-      <h1 className="text-3xl font-bold mb-8 text-center text-amber-900">All Books</h1>
+      <h1 className="text-2xl font-semibold mb-6 text-center text-gray-800">All Books</h1>
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="bg-amber-600 text-white">
+              <tr className="bg-teal-600 text-white">
                 <th className="px-6 py-4 text-center font-semibold">S.No</th>
                 <th className="px-6 py-4 text-left font-semibold">Title</th>
                 <th className="px-6 py-4 text-left font-semibold">Author</th>
@@ -32,12 +32,12 @@ export default function AllBooks() {
             <tbody>
               {books.length > 0 ? (
                 books.map((book: any, index: number) => (
-                  <tr key={index} className="border-b border-amber-100 hover:bg-amber-50 transition duration-200">
-                    <td className="px-6 py-4 text-center font-semibold text-amber-900">{index + 1}</td>
-                    <td className="px-6 py-4 font-medium text-amber-900">{book.title}</td>
+                  <tr key={index} className="border-b border-gray-100 hover:bg-gray-50 transition">
+                    <td className="px-6 py-4 text-center font-semibold text-gray-700">{index + 1}</td>
+                    <td className="px-6 py-4 font-medium text-gray-800">{book.title}</td>
                     <td className="px-6 py-4 text-gray-700">{book.author}</td>
                     <td className="px-6 py-4 text-gray-600">
-                      <span className="inline-block bg-amber-100 text-amber-800 px-2 py-1 rounded-full text-sm">
+                      <span className="inline-block bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-medium">
                         {book.category}
                       </span>
                     </td>
