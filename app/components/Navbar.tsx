@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const Navbar = () => {
+export default function Navbar() {
     return (
         <div className="bg-teal-600 text-white flex flex-row justify-between items-center px-20 py-4 shadow-lg sticky top-0 z-50">
             <div className="logo text-3xl animate-fadeIn hover:scale-110 transition cursor-pointer">
@@ -30,4 +30,3 @@ const Navbar = () => {
     )
 }
 
-export default Navbar

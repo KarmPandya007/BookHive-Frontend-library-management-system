@@ -14,50 +14,50 @@ export default function AddBook() {
     isbn: '',
     totalCopies: '',
     availableCopies: '',
-    issuesCount: '',
+    issuedCount: '',
   });
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData(prev => ({...prev, [name]: value}));
+    setFormData(prev => ({ ...prev, [name]: value }));
   }
 
-  const handleSubmit = async (e: any)=>{
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    try{
-      const response = await fetch('http://localhost:7000/api/books', {
-        method : "POST",
-        headers : {
-          'Content-Type' : 'application/json'
+    try {
+      const response = await fetch('https://bookhive-library-management-system-ir5q.onrender.com/api/books', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
         },
-        body : JSON.stringify(formData)
+        body: JSON.stringify(formData)
       })
-      if(response.ok){
+      if (response.ok) {
         alert("Book added successfully");
         setFormData({
-          title : '',
-          author : '',
-          description : '',
-          category : '',
-          isbn : '',
-          totalCopies : '',
-          availableCopies : '',
-          issuesCount : '',
+          title: '',
+          author: '',
+          description: '',
+          category: '',
+          isbn: '',
+          totalCopies: '',
+          availableCopies: '',
+          issuedCount: '',
         });
         router.push('/allbooks');
-      }else{
+      } else {
         alert("Failed to add book");
       }
-      
-    }catch(error){
+
+    } catch (error) {
       console.log("Error:", error);
       alert("An error occurred while adding the book");
     }
   }
 
   return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+
       <div className="w-full max-w-md">
         <h1 className="text-2xl font-semibold text-center text-gray-800 mb-8">Add New Book</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -144,12 +144,12 @@ export default function AddBook() {
               />
             </div>
             <div>
-              <label htmlFor="issuesCount" className="block text-sm font-semibold text-teal-700 mb-2">Issues Count</label>
+              <label htmlFor="issuedCount" className="block text-sm font-semibold text-teal-700 mb-2">Issues Count</label>
               <input
                 type="number"
-                id="issuesCount"
-                name="issuesCount"
-                value={formData.issuesCount}
+                id="issuedCount"
+                name="issuedCount"
+                value={formData.issuedCount}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
                 min="0"
