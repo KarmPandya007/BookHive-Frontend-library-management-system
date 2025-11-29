@@ -56,34 +56,36 @@ export default function AddBook() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-6 sm:py-8">
 
-      <div className="w-full max-w-md">
-        <h1 className="text-2xl font-semibold text-center text-gray-800 mb-8">Add New Book</h1>
+      <div className="w-full max-w-md lg:max-w-2xl">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-center text-gray-800 mb-6 sm:mb-8">Add New Book</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium text-teal-700 mb-1">Title</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="author" className="block text-sm font-semibold text-teal-700 mb-2">Author</label>
-            <input
-              type="text"
-              id="author"
-              name="author"
-              value={formData.author}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
-              required
-            />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="title" className="block text-sm font-medium text-teal-700 mb-1">Title</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="author" className="block text-sm font-semibold text-teal-700 mb-2">Author</label>
+              <input
+                type="text"
+                id="author"
+                name="author"
+                value={formData.author}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+                required
+              />
+            </div>
           </div>
           <div>
             <label htmlFor="description" className="block text-sm font-semibold text-teal-700 mb-2">Description</label>
@@ -92,33 +94,35 @@ export default function AddBook() {
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200 resize-none"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200 resize-none"
               rows={3}
             />
           </div>
-          <div>
-            <label htmlFor="category" className="block text-sm font-semibold text-teal-700 mb-2">Category</label>
-            <input
-              type="text"
-              id="category"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
-            />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="category" className="block text-sm font-semibold text-teal-700 mb-2">Category</label>
+              <input
+                type="text"
+                id="category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+              />
+            </div>
+            <div>
+              <label htmlFor="isbn" className="block text-sm font-semibold text-teal-700 mb-2">ISBN</label>
+              <input
+                type="text"
+                id="isbn"
+                name="isbn"
+                value={formData.isbn}
+                onChange={handleChange}
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+              />
+            </div>
           </div>
-          <div>
-            <label htmlFor="isbn" className="block text-sm font-semibold text-teal-700 mb-2">ISBN</label>
-            <input
-              type="text"
-              id="isbn"
-              name="isbn"
-              value={formData.isbn}
-              onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label htmlFor="totalCopies" className="block text-sm font-semibold text-teal-700 mb-2">Total Copies</label>
               <input
@@ -127,7 +131,7 @@ export default function AddBook() {
                 name="totalCopies"
                 value={formData.totalCopies}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
                 min="0"
               />
             </div>
@@ -139,7 +143,7 @@ export default function AddBook() {
                 name="availableCopies"
                 value={formData.availableCopies}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
                 min="0"
               />
             </div>
@@ -151,12 +155,12 @@ export default function AddBook() {
                 name="issuedCount"
                 value={formData.issuedCount}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
                 min="0"
               />
             </div>
           </div>
-          <button type="submit" className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 transition font-medium">
+          <button type="submit" className="w-full bg-orange-500 text-white py-2.5 sm:py-3 rounded-md hover:bg-orange-600 transition font-medium text-sm sm:text-base">
             Add Book
           </button>
         </form>
