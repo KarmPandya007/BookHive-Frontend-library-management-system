@@ -25,7 +25,7 @@ export default function AddBook() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:7000/api/books', {
+      const response = await fetch('https://bookhive-library-management-system-ir5q.onrender.com/api/books', {
         method: "POST",
         headers: {
           'Content-Type': 'application/json'
