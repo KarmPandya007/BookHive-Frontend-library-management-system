@@ -8,7 +8,7 @@ export default function AllBooks() {
   useEffect(() => {
     fetch("http://localhost:7000/api/books")
       .then(res => res.json())
-      .then(data => setBooks(data))
+      .then(data => setBooks(data.allBooks || []))
       .catch(error => console.log(error));
   }, []);
 
