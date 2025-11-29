@@ -56,112 +56,159 @@ export default function AddBook() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-6 sm:py-8">
+    <div className="min-h-screen bg-linear-to-br from-teal-50 via-white to-orange-50 flex items-center justify-center px-4 py-6 sm:py-8">
 
       <div className="w-full max-w-md lg:max-w-2xl">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-center text-gray-800 mb-6 sm:mb-8">Add New Book</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-linear-to-r from-teal-600 to-orange-500 mb-2">Add New Book</h1>
+          <p className="text-sm sm:text-base text-gray-600">Fill in the details to add a book to your library</p>
+        </div>
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 space-y-5 border border-gray-100">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-teal-700 mb-1">Title</label>
+              <label htmlFor="title" className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                <svg className="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                Book Title
+              </label>
               <input
                 type="text"
                 id="title"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+                placeholder="Enter book title"
+                className="w-full border-2 border-gray-200 rounded-lg px-4 py-2.5 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 hover:border-gray-300"
                 required
               />
             </div>
             <div>
-              <label htmlFor="author" className="block text-sm font-semibold text-teal-700 mb-2">Author</label>
+              <label htmlFor="author" className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                <svg className="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Author Name
+              </label>
               <input
                 type="text"
                 id="author"
                 name="author"
                 value={formData.author}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+                placeholder="Enter author name"
+                className="w-full border-2 border-gray-200 rounded-lg px-4 py-2.5 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 hover:border-gray-300"
                 required
               />
             </div>
           </div>
           <div>
-            <label htmlFor="description" className="block text-sm font-semibold text-teal-700 mb-2">Description</label>
+            <label htmlFor="description" className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+              <svg className="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+              </svg>
+              Description
+            </label>
             <textarea
               id="description"
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200 resize-none"
+              placeholder="Brief description of the book"
+              className="w-full border-2 border-gray-200 rounded-lg px-4 py-2.5 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 resize-none hover:border-gray-300"
               rows={3}
             />
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="category" className="block text-sm font-semibold text-teal-700 mb-2">Category</label>
+              <label htmlFor="category" className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                <svg className="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                </svg>
+                Category
+              </label>
               <input
                 type="text"
                 id="category"
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+                placeholder="e.g., Fiction, Science"
+                className="w-full border-2 border-gray-200 rounded-lg px-4 py-2.5 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 hover:border-gray-300"
               />
             </div>
             <div>
-              <label htmlFor="isbn" className="block text-sm font-semibold text-teal-700 mb-2">ISBN</label>
+              <label htmlFor="isbn" className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                <svg className="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                </svg>
+                ISBN
+              </label>
               <input
                 type="text"
                 id="isbn"
                 name="isbn"
                 value={formData.isbn}
                 onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
+                placeholder="978-0-123456-78-9"
+                className="w-full border-2 border-gray-200 rounded-lg px-4 py-2.5 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 hover:border-gray-300"
               />
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label htmlFor="totalCopies" className="block text-sm font-semibold text-teal-700 mb-2">Total Copies</label>
-              <input
-                type="number"
-                id="totalCopies"
-                name="totalCopies"
-                value={formData.totalCopies}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
-                min="0"
-              />
-            </div>
-            <div>
-              <label htmlFor="availableCopies" className="block text-sm font-semibold text-teal-700 mb-2">Available Copies</label>
-              <input
-                type="number"
-                id="availableCopies"
-                name="availableCopies"
-                value={formData.availableCopies}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
-                min="0"
-              />
-            </div>
-            <div>
-              <label htmlFor="issuedCount" className="block text-sm font-semibold text-teal-700 mb-2">Issues Count</label>
-              <input
-                type="number"
-                id="issuedCount"
-                name="issuedCount"
-                value={formData.issuedCount}
-                onChange={handleChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-200 transition duration-200"
-                min="0"
-              />
+          <div className="bg-linear-to-r from-teal-50 to-orange-50 rounded-xl p-5 space-y-4">
+            <h3 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+              <svg className="w-5 h-5 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+              Inventory Details
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label htmlFor="totalCopies" className="block text-xs font-semibold text-gray-600 mb-1.5">Total Copies</label>
+                <input
+                  type="number"
+                  id="totalCopies"
+                  name="totalCopies"
+                  value={formData.totalCopies}
+                  onChange={handleChange}
+                  placeholder="0"
+                  className="w-full border-2 border-white bg-white rounded-lg px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 hover:border-gray-200"
+                  min="0"
+                />
+              </div>
+              <div>
+                <label htmlFor="availableCopies" className="block text-xs font-semibold text-gray-600 mb-1.5">Available</label>
+                <input
+                  type="number"
+                  id="availableCopies"
+                  name="availableCopies"
+                  value={formData.availableCopies}
+                  onChange={handleChange}
+                  placeholder="0"
+                  className="w-full border-2 border-white bg-white rounded-lg px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 hover:border-gray-200"
+                  min="0"
+                />
+              </div>
+              <div>
+                <label htmlFor="issuedCount" className="block text-xs font-semibold text-gray-600 mb-1.5">Issued</label>
+                <input
+                  type="number"
+                  id="issuedCount"
+                  name="issuedCount"
+                  value={formData.issuedCount}
+                  onChange={handleChange}
+                  placeholder="0"
+                  className="w-full border-2 border-white bg-white rounded-lg px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 hover:border-gray-200"
+                  min="0"
+                />
+              </div>
             </div>
           </div>
-          <button type="submit" className="w-full bg-orange-500 text-white py-2.5 sm:py-3 rounded-md hover:bg-orange-600 transition font-medium text-sm sm:text-base">
-            Add Book
+          <button type="submit" className="w-full bg-linear-to-r from-teal-600 to-orange-500 text-white py-3 sm:py-3.5 rounded-lg hover:from-teal-700 hover:to-orange-600 transition-all duration-300 font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Add Book to Library
           </button>
         </form>
       </div>
