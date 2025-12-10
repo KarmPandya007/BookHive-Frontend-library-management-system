@@ -50,7 +50,9 @@ const AddBookPage: React.FC = () => {
           availableCopies: '',
           issuedCount: '',
         });
-        router.push('/allbooks');
+        setTimeout(() => {
+          router.push('/allbooks');
+        }, 3000); // 2-second delay
       } else {
         toast.error('Failed to add book.');
       }
@@ -178,7 +180,7 @@ const AddBookPage: React.FC = () => {
                     onChange={handleChange}
                     placeholder="0"
                     className="w-full border-2 border-white bg-white rounded-lg px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 hover:border-gray-200"
-                    min="0" 
+                    min="0"
                   />
                 </div>
                 <div>
