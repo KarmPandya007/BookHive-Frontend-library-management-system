@@ -3,17 +3,20 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
 const AddBookPage: React.FC = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     title: '',
     author: '',
     description: '',
     category: '',
     isbn: '',
-    totalCopies: 0,
-    availableCopies: 0,
-    issuedCount: 0,
+    totalCopies: '',
+    availableCopies: '',
+    issuedCount: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -43,10 +46,11 @@ const AddBookPage: React.FC = () => {
           description: '',
           category: '',
           isbn: '',
-          totalCopies: 0,
-          availableCopies: 0,
-          issuedCount: 0,
+          totalCopies: '',
+          availableCopies: '',
+          issuedCount: '',
         });
+        router.push('/allbooks');
       } else {
         toast.error('Failed to add book.');
       }
@@ -174,7 +178,7 @@ const AddBookPage: React.FC = () => {
                     onChange={handleChange}
                     placeholder="0"
                     className="w-full border-2 border-white bg-white rounded-lg px-3 py-2 text-sm sm:text-base text-gray-900 focus:border-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-100 transition duration-200 hover:border-gray-200"
-                    min="0"
+                    min="0" 
                   />
                 </div>
                 <div>
