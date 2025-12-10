@@ -6,7 +6,7 @@ export default function AllBooks() {
   const [books, setBooks] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("https://bookhive-library-management-system-ir5q.onrender.com/api/books")
+    fetch("http://localhost:7000/api/books")
       .then(res => res.json())
       .then(data => setBooks(data.allBooks || []))
       .catch(error => console.log(error));
