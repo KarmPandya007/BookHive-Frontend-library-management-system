@@ -25,6 +25,8 @@ export default function Navbar() {
                     <Link href="/" className="">Home</Link>
                     <Link href="/addbook" className="">Add Book</Link>
                     <Link href="/allbooks" className="">All Books</Link>
+                    <Link href="/signup-page" className="">Signup</Link>
+                    <Link href="/login-page" className="">Login</Link>
                 </nav>
 
                 {/* Mobile controls */}
@@ -54,6 +56,8 @@ export default function Navbar() {
                         <Link href="/" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-teal-700">Home</Link>
                         <Link href="/addbook" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-teal-700">Add Book</Link>
                         <Link href="/allbooks" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-teal-700">All Books</Link>
+                        <Link href="/signup-page" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-teal-700">Signup</Link>
+                        <Link href="/login-page" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-teal-700">Login</Link>
                     </div>
                 </div>
             )}

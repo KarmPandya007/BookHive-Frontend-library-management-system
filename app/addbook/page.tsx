@@ -30,7 +30,7 @@ const AddBookPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://bookhive-library-management-system-ir5q.onrender.com/api/books', {
+      const response = await fetch('https://book-hive-backend-library-managemen.vercel.app/api/books', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
