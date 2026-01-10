@@ -34,7 +34,7 @@ export default function SignupPage() {
     setLoading(true);
     try {
       // Update this URL if your backend signup endpoint is different
-      const res = await fetch("/api/signup", {
+      const res = await fetch("https://book-hive-backend-library-managemen.vercel.app/api/readers/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -49,7 +49,7 @@ export default function SignupPage() {
 
       if (res.ok) {
         toast.success("Registration successful — redirecting to login...");
-        setTimeout(() => router.push("/login-page"), 1300);
+        setTimeout(() => router.push("/allbooks"), 1300);
       } else {
         const json = await res.json().catch(() => null);
         const message = json?.message || "Registration failed";

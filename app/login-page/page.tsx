@@ -21,7 +21,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       // Adjust the endpoint if your auth route is different
-      const res = await fetch("/api/login", {
+      const res = await fetch("https://book-hive-backend-library-managemen.vercel.app/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
