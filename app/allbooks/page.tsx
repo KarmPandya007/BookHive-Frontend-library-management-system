@@ -6,7 +6,7 @@ export default function AllBooks() {
   const [books, setBooks] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:7000/api/books/")
+    fetch("https://book-hive-backend-library-managemen.vercel.app/api/books/")
       .then((res) => res.json())
       .then((data) => setBooks(data.allBooks || []))
       .catch((error) => console.log(error));
