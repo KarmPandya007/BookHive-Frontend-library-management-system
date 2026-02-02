@@ -3,9 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import photo from "../assets/large.png";
 import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Library } from "lucide-react"
 
 const navLinks = [
     { label: "Home", href: "/" },
@@ -24,12 +23,10 @@ export default function Navbar() {
             <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-8 lg:px-12">
                 <div className="flex items-center gap-2">
                     <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-                        <img
-                            src={photo.src}
-                            alt="BookHive"
-                            className="h-8 w-8 rounded-lg object-contain"
-                        />
-                        <span className="text-xl font-bold tracking-tight text-primary">BookHive</span>
+                        <div className="bg-primary rounded-lg p-1">
+                            <Library className="h-5 w-5 text-primary-foreground" />
+                        </div>
+                        <span className="text-xl font-bold tracking-tight">BookHive</span>
                     </Link>
                 </div>
 
