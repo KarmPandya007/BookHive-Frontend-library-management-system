@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { API_BASE_URL } from "@/lib/api";
+
 export default function LoginPage() {
   const router = useRouter();
   const [form, setForm] = useState({ id: "", password: "" });
@@ -21,7 +23,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       // Adjust the endpoint if your auth route is different
-      const res = await fetch("https://book-hive-backend-library-managemen.vercel.app/api/login", {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { API_BASE_URL } from "@/lib/api";
+
 export default function SignupPage() {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -34,7 +36,7 @@ export default function SignupPage() {
     setLoading(true);
     try {
       // Update this URL if your backend signup endpoint is different
-      const res = await fetch("https://book-hive-backend-library-managemen.vercel.app/api/readers/register", {
+      const res = await fetch(`${API_BASE_URL}/readers/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

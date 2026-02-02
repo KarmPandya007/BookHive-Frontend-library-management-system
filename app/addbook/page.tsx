@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 
+import { API_BASE_URL } from '@/lib/api';
+
 const AddBookPage: React.FC = () => {
   const router = useRouter();
 
@@ -30,7 +32,7 @@ const AddBookPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://book-hive-backend-library-managemen.vercel.app/api/books', {
+      const response = await fetch(`${API_BASE_URL}/books`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
