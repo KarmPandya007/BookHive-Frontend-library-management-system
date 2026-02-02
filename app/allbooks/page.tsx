@@ -29,6 +29,16 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -36,12 +46,12 @@ import {
   Edit,
   Trash2,
   Search,
-  MoreVertical,
   BookOpen,
   Layers,
   Hash,
   RefreshCcw,
-  Plus
+  Plus,
+  AlertTriangle
 } from "lucide-react";
 import Link from "next/link";
 
@@ -51,6 +61,7 @@ export default function AllBooks() {
   const [error, setError] = useState<string | null>(null);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -78,23 +89,25 @@ export default function AllBooks() {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this book?")) return;
+  const handleDelete = async () => {
+    if (!bookToDelete) return;
 
     try {
-      const res = await fetch(`${API_BASE_URL}/books/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/books/${bookToDelete}`, {
         method: "DELETE",
       });
 
       if (res.ok) {
         toast.success("Book deleted successfully!");
-        setBooks((prev) => prev.filter((book) => book._id !== id));
+        setBooks((prev) => prev.filter((book) => book._id !== bookToDelete));
       } else {
         toast.error("Failed to delete book.");
       }
     } catch (err) {
       toast.error("Error deleting book.");
       console.error(err);
+    } finally {
+      setBookToDelete(null);
     }
   };
 
@@ -259,7 +272,7 @@ export default function AllBooks() {
                             <Button variant="ghost" size="icon" onClick={() => handleEditClick(book)} title="Edit">
                               <Edit className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10 hover:text-destructive" onClick={() => handleDelete(book._id)} title="Delete">
+                            <Button variant="ghost" size="icon" className="text-destructive hover:bg-destructive/10 hover:text-destructive" onClick={() => setBookToDelete(book._id)} title="Delete">
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
@@ -300,7 +313,7 @@ export default function AllBooks() {
                         <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleEditClick(book)}>
                           <Edit className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDelete(book._id)}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => setBookToDelete(book._id)}>
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
@@ -454,6 +467,27 @@ export default function AllBooks() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={!!bookToDelete} onOpenChange={(open) => !open && setBookToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-destructive" />
+              Are you absolutely sure?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the book from the library inventory and remove its data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete Book
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
