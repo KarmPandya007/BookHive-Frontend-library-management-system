@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from 'next';
 import Navbar from './components/Navbar';
 import photo from "./assets/large.png";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "BookHive - Library Management System",
@@ -19,9 +20,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="antialiased font-sans">
         <Navbar />
-        {children}
+        <main>{children}</main>
+        <Toaster />
       </body>
     </html>
   );

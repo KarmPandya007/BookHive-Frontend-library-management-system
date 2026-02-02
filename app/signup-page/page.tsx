@@ -2,10 +2,31 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
+import { toast } from "sonner";
 import { API_BASE_URL } from "@/lib/api";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Fingerprint,
+  Lock,
+  Loader2,
+  UserPlus
+} from "lucide-react";
+import Link from "next/link";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -27,7 +48,6 @@ export default function SignupPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Basic client-side validation
     if (!form.name || !form.email || !form.phone || !form.address || !form.id || !form.password) {
       toast.error("Please fill in all required fields.");
       return;
@@ -35,7 +55,6 @@ export default function SignupPage() {
 
     setLoading(true);
     try {
-      // Update this URL if your backend signup endpoint is different
       const res = await fetch(`${API_BASE_URL}/readers/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -50,69 +69,156 @@ export default function SignupPage() {
       });
 
       if (res.ok) {
-        toast.success("Registration successful — redirecting to login...");
+        toast.success("Account created successfully! Redirecting to dashboard...");
         setTimeout(() => router.push("/allbooks"), 1300);
       } else {
         const json = await res.json().catch(() => null);
-        const message = json?.message || "Registration failed";
+        const message = json?.message || "Registration failed. Please try again.";
         toast.error(message);
       }
     } catch (err) {
-      toast.error("Unable to contact server");
+      toast.error("Unable to connect to the server. Please check your connection.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <>
-      <ToastContainer position="top-right" />
-      <div className="min-h-screen flex items-center justify-center bg-yellow-50 px-4 py-10">
-        <div className="w-full max-w-lg bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-          <h2 className="text-2xl font-semibold text-center text-teal-700 mb-4">Create an account</h2>
-          <p className="text-center text-sm text-gray-500 mb-6">Register to access BookHive features</p>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full name</label>
-              <input id="name" name="name" value={form.name} onChange={handleChange} required className="w-full px-3 py-2 border rounded-lg border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-500" placeholder="Jane Doe" />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-              <input id="email" name="email" type="email" value={form.email} onChange={handleChange} required className="w-full px-3 py-2 border rounded-lg border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-500" placeholder="you@example.com" />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                <input id="phone" name="phone" type="tel" value={form.phone} onChange={handleChange} required className="w-full px-3 py-2 border rounded-lg border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-500" placeholder="9876543210" />
+    <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-muted/30 px-4 py-12 animate-in fade-in duration-700">
+      <Card className="w-full max-w-xl shadow-2xl border-primary/10">
+        <CardHeader className="space-y-1 text-center font-sans">
+          <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit mb-2">
+            <UserPlus className="h-6 w-6 text-primary" />
+          </div>
+          <CardTitle className="text-3xl font-bold tracking-tight">Create Account</CardTitle>
+          <CardDescription>
+            Join BookHive to manage your reading history and explore new titles.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="name"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Jane Doe"
+                    className="pl-9"
+                  />
+                </div>
               </div>
-
-              <div>
-                <label htmlFor="id" className="block text-sm font-medium text-gray-700 mb-1">ID (numeric)</label>
-                <input id="id" name="id" type="number" value={form.id} onChange={handleChange} required className="w-full px-3 py-2 border rounded-lg border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-500" placeholder="12345" />
+              <div className="space-y-2">
+                <Label htmlFor="email">Email Address</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="jane@example.com"
+                    className="pl-9"
+                  />
+                </div>
               </div>
             </div>
 
-            <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Address</label>
-              <textarea id="address" name="address" value={form.address} onChange={handleChange} required rows={2} className="w-full px-3 py-2 border rounded-lg border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-500" placeholder="Street, City, State" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="phone">Phone Number</Label>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={form.phone}
+                    onChange={handleChange}
+                    required
+                    placeholder="9123456780"
+                    className="pl-9"
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="id">Member ID (Numeric)</Label>
+                <div className="relative">
+                  <Fingerprint className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="id"
+                    name="id"
+                    type="number"
+                    value={form.id}
+                    onChange={handleChange}
+                    required
+                    placeholder="1001"
+                    className="pl-9"
+                  />
+                </div>
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-              <input id="password" name="password" type="password" value={form.password} onChange={handleChange} required minLength={6} className="w-full px-3 py-2 border rounded-lg border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-100 focus:border-teal-500" placeholder="Create a strong password" />
+            <div className="space-y-2">
+              <Label htmlFor="address">Address</Label>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Textarea
+                  id="address"
+                  name="address"
+                  value={form.address}
+                  onChange={handleChange}
+                  required
+                  placeholder="Street, City, State"
+                  className="pl-9 min-h-[80px] resize-none pt-2.5"
+                />
+              </div>
             </div>
 
-            <button type="submit" disabled={loading} className="w-full bg-teal-600 text-white py-2 rounded-lg font-medium disabled:opacity-60">
-              {loading ? "Creating account..." : "Create account"}
-            </button>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                  minLength={6}
+                  placeholder="Create a strong password"
+                  className="pl-9"
+                />
+              </div>
+            </div>
 
-            <p className="text-center text-sm text-gray-500">Already registered? <a className="text-teal-600 font-medium" href="/login-page">Sign in</a></p>
+            <Button type="submit" className="w-full h-11 text-lg" disabled={loading}>
+              {loading ? (
+                <Loader2 className="h-5 w-5 animate-spin mr-2" />
+              ) : (
+                <UserPlus className="h-5 w-5 mr-2" />
+              )}
+              {loading ? "Creating Account..." : "Create Account"}
+            </Button>
           </form>
-        </div>
-      </div>
-    </>
+        </CardContent>
+        <CardFooter className="flex flex-col space-y-4 border-t bg-muted/20 p-6 rounded-b-xl text-center">
+          <p className="text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <Link href="/login-page" className="text-primary font-semibold hover:underline">
+              Sign in here
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }
