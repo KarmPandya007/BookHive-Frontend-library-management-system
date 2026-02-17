@@ -10,6 +10,7 @@ export interface Book {
     totalCopies: number;
     availableCopies: number;
     issuedCount: number;
+    coverImage?: string;
     createdAt: string;
     updatedAt: string;
     __v: number;

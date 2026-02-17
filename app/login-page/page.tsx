@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { API_BASE_URL } from "@/lib/api";
+import { authUtils } from "@/lib/auth";
 import {
   Card,
   CardContent,
@@ -21,13 +22,14 @@ import {
   Eye,
   EyeOff,
   Loader2,
-  LogIn
+  LogIn,
+  Mail
 } from "lucide-react";
 import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ id: "", password: "" });
+  const [form, setForm] = useState({ identifier: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -39,23 +41,80 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    const identifier = form.identifier.trim();
+    const payload: any = {
+      password: form.password
+    };
+
+    // Determine payload based on input type to match backend expectations
+    if (identifier.includes('@')) {
+      payload.email = identifier;
+      payload.id = identifier; // Fallback
+    } else if (!isNaN(Number(identifier)) && identifier !== "") {
+      payload.id = Number(identifier); // Send as number if numeric
+      payload.email = identifier;
+    } else {
+      payload.id = identifier;
+      payload.email = identifier;
+    }
+
     try {
-      const res = await fetch(`${API_BASE_URL}/login`, {
+      const res = await fetch(`${API_BASE_URL}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
 
+      const responseData = await res.json().catch(() => ({}));
+      console.log("Login Response Data:", responseData); // Full debug log
+
       if (res.ok) {
-        toast.success("Welcome back! Redirecting you now.");
+        // Support common API response structures: { token, user } or { users: [...] }
+        let user = responseData.user || responseData.data?.user;
+        const token = responseData.token || responseData.data?.token;
+
+        // NEW: Support for the "list of users" response format you provided
+        if (!user && responseData.users && Array.isArray(responseData.users)) {
+          const identifier = form.identifier.trim().toLowerCase();
+          console.log("Searching for user matching:", identifier);
+
+          // Find the user that matches either the entered email or the entered ID or the entered name
+          user = responseData.users.find((u: any) =>
+            u.email?.toLowerCase() === identifier ||
+            u.id?.toString() === identifier ||
+            u.name?.toLowerCase() === identifier
+          );
+
+          if (user) {
+            console.log("Found matching user in list:", user.name, "with role:", user.role);
+          } else {
+            console.warn("No matching user found in the returned users list.");
+          }
+        }
+
+        if (token) {
+          authUtils.setToken(token);
+        }
+
+        if (user) {
+          authUtils.setUser(user);
+          const isAdmin = user.role?.toLowerCase() === 'admin';
+          if (isAdmin) {
+            toast.success(`Welcome back Admin, ${user.name}! Access granted.`);
+          } else {
+            toast.success(`Welcome back, ${user.name}!`);
+          }
+        }
+
         setTimeout(() => router.push("/allbooks"), 1200);
       } else {
-        const json = await res.json().catch(() => null);
-        const msg = json?.message || "Invalid credentials. Please try again.";
+        const msg = responseData.message || responseData.error || "Invalid credentials. Please try again.";
         toast.error(msg);
       }
     } catch (err) {
       toast.error("Unable to connect to the server. Please check your connection.");
+      console.error("Login error:", err);
     } finally {
       setLoading(false);
     }
@@ -68,7 +127,7 @@ export default function LoginPage() {
           <div className="mx-auto bg-primary/10 p-3 rounded-full w-fit mb-2">
             <Lock className="h-6 w-6 text-primary" />
           </div>
-          <CardTitle className="text-3xl font-bold tracking-tight">Sign In</CardTitle>
+          <CardTitle className="text-3xl font-bold tracking-tight">Login</CardTitle>
           <CardDescription>
             Enter your credentials to access your library account.
           </CardDescription>
@@ -76,16 +135,16 @@ export default function LoginPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="id">Member ID</Label>
+              <Label htmlFor="email">Email Address</Label>
               <div className="relative">
-                <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
-                  id="id"
-                  name="id"
-                  value={form.id}
+                  id="identifier"
+                  name="identifier"
+                  value={form.identifier}
                   onChange={handleChange}
                   required
-                  placeholder="e.g. 1001"
+                  placeholder="Email or Member ID"
                   className="pl-9"
                 />
               </div>
@@ -126,7 +185,7 @@ export default function LoginPage() {
               ) : (
                 <LogIn className="h-5 w-5 mr-2" />
               )}
-              {loading ? "Authenticating..." : "Sign In"}
+              {loading ? "Authenticating..." : "Login"}
             </Button>
           </form>
         </CardContent>

@@ -23,7 +23,10 @@ import {
   Tag,
   Hash,
   Database,
-  ArrowLeft
+  ArrowLeft,
+  Image as ImageIcon,
+  Upload,
+  X
 } from "lucide-react";
 import Link from 'next/link';
 
@@ -41,6 +44,8 @@ const AddBookPage: React.FC = () => {
     issuedCount: '',
   });
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -51,20 +56,73 @@ const AddBookPage: React.FC = () => {
     });
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+      if (!validTypes.includes(file.type)) {
+        toast.error('Please select a JPG, JPEG, or PNG image');
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('Image size should be less than 5MB');
+        return;
+      }
+
+      setSelectedFile(file);
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setSelectedFile(null);
+    setImagePreview(null);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
+      // Create FormData for multipart/form-data submission
+      const formDataToSend = new FormData();
+
+      // Append all form fields
+      formDataToSend.append('title', formData.title);
+      formDataToSend.append('author', formData.author);
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('category', formData.category);
+      formDataToSend.append('isbn', formData.isbn);
+      formDataToSend.append('totalCopies', formData.totalCopies.toString());
+      formDataToSend.append('availableCopies', formData.availableCopies.toString());
+      formDataToSend.append('issuedCount', formData.issuedCount.toString());
+
+      // Append image file if selected
+      if (selectedFile) {
+        formDataToSend.append('coverImage', selectedFile);
+      }
+
       const response = await fetch(`${API_BASE_URL}/books`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          // Don't set Content-Type - browser will set it automatically with boundary
         },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
 
       if (response.ok) {
+        const result = await response.json();
         toast.success('Book successfully added to the library!');
+
+        // Reset form
         setFormData({
           title: '',
           author: '',
@@ -75,13 +133,19 @@ const AddBookPage: React.FC = () => {
           availableCopies: '',
           issuedCount: '',
         });
+        setSelectedFile(null);
+        setImagePreview(null);
+
         setTimeout(() => {
           router.push('/allbooks');
         }, 2000);
       } else {
-        toast.error('Failed to add book. Please check your data.');
+        const errorData = await response.json().catch(() => null);
+        const errorMessage = errorData?.message || 'Failed to add book. Please check your data.';
+        toast.error(errorMessage);
       }
     } catch (error) {
+      console.error('Error adding book:', error);
       toast.error('A network error occurred. Please try again.');
     } finally {
       setLoading(false);
@@ -194,6 +258,52 @@ const AddBookPage: React.FC = () => {
           </div>
 
           <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <ImageIcon className="h-5 w-5 text-primary" /> Book Cover
+                </CardTitle>
+                <CardDescription>Upload a cover image for the book (optional).</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {!imagePreview ? (
+                  <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center hover:border-primary/50 transition-colors">
+                    <input
+                      type="file"
+                      id="coverImage"
+                      accept="image/jpeg,image/jpg,image/png"
+                      onChange={handleFileChange}
+                      className="hidden"
+                    />
+                    <label htmlFor="coverImage" className="cursor-pointer flex flex-col items-center gap-2">
+                      <Upload className="h-10 w-10 text-muted-foreground" />
+                      <div>
+                        <p className="text-sm font-medium">Click to upload cover image</p>
+                        <p className="text-xs text-muted-foreground mt-1">JPG, JPEG or PNG (max 5MB)</p>
+                      </div>
+                    </label>
+                  </div>
+                ) : (
+                  <div className="relative">
+                    <img
+                      src={imagePreview}
+                      alt="Book cover preview"
+                      className="w-full h-64 object-cover rounded-lg"
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon"
+                      className="absolute top-2 right-2"
+                      onClick={removeImage}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
             <Card className="border-primary/20 bg-primary/5">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">

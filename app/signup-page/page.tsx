@@ -55,7 +55,7 @@ export default function SignupPage() {
 
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/readers/register`, {
+      const res = await fetch(`${API_BASE_URL}/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -214,7 +214,7 @@ export default function SignupPage() {
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
             <Link href="/login-page" className="text-primary font-semibold hover:underline">
-              Sign in here
+              Login here
             </Link>
           </p>
         </CardFooter>
