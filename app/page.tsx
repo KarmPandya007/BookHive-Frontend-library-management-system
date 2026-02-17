@@ -27,13 +27,13 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative py-24 md:py-32 overflow-hidden bg-background">
-        <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" />
+        <div className="absolute inset-0 bg-grid-slate-100 mask-[linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:mask-[linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" />
         <div className="container relative z-10 mx-auto px-4 text-center">
           <Badge variant="secondary" className="mb-6 py-1 px-4 text-sm gap-2 animate-bounce">
             <Sparkles className="h-3.5 w-3.5 text-primary" />
             Empowering Modern Libraries
           </Badge>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 bg-linear-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
             Your Gateway to <br /> Infinite Knowledge
           </h1>
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">

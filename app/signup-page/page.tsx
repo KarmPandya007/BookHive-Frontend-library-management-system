@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { API_BASE_URL } from "@/lib/api";
+import { authUtils } from "@/lib/auth";
 import {
   Card,
   CardContent,
@@ -69,8 +70,23 @@ export default function SignupPage() {
       });
 
       if (res.ok) {
-        toast.success("Account created successfully! Redirecting to dashboard...");
-        setTimeout(() => router.push("/allbooks"), 1300);
+        const responseData = await res.json().catch(() => ({}));
+
+        if (responseData.token) {
+          authUtils.setToken(responseData.token);
+        }
+
+        // The entire response (minus success/message/token) or specific fields
+        authUtils.setUser({
+          _id: responseData._id,
+          name: responseData.name,
+          email: responseData.email,
+          id: responseData.id,
+          role: responseData.role
+        });
+
+        toast.success("Account created successfully! Welcome to BookHive.");
+        setTimeout(() => router.push("/explorebooks"), 1300);
       } else {
         const json = await res.json().catch(() => null);
         const message = json?.message || "Registration failed. Please try again.";
